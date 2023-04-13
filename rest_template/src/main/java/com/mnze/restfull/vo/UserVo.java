@@ -19,7 +19,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Validated
 @AllArgsConstructor
-public class User {
+public class UserVo {
 
     @NotNull(message = "用户名不能为空")
     private String name;

@@ -1,6 +1,6 @@
 package com.mnze.restfull.command;
 
-import com.mnze.restfull.vo.User;
+import com.mnze.restfull.vo.UserVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,7 +22,7 @@ import javax.validation.Valid;
 public class UserCommandController {
 
         @PostMapping("/create")
-        public User create(@RequestBody @Valid User user){
+        public UserVo create(@RequestBody @Valid UserVo user){
             log.info(user.toString());
             return user;
         }
