@@ -11,6 +11,9 @@
     <modules>
         <module>my_spring</module>
         <module>rest_template</module>
+        <module>service_template</module>
+        <module>common_template</module>
+        <module>integration_template</module>
     </modules>
 
     <groupId>com.mnze</groupId>

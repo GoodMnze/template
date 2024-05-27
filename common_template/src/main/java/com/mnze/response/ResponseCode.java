@@ -1,4 +1,4 @@
-package com.mnze.restfull.response;
+package com.mnze.response;
 
 import java.util.HashMap;
 import java.util.Map;

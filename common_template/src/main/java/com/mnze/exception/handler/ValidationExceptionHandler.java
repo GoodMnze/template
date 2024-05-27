@@ -1,15 +1,18 @@
-package com.mnze.restfull.exception;
+package com.mnze.exception.handler;
 
-import com.mnze.restfull.response.HttpResponse;
-import com.mnze.restfull.response.ResponseCode;
+
+import com.mnze.response.HttpResponse;
+import com.mnze.response.ResponseCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.core.annotation.Order;
 import org.springframework.validation.BindException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.util.*;
@@ -21,6 +24,7 @@ import java.util.stream.Collectors;
  */
 
 @Slf4j
+@Order(1)
 @ResponseBody
 @ControllerAdvice
 public class ValidationExceptionHandler{
@@ -73,11 +77,5 @@ public class ValidationExceptionHandler{
                 .map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.toList()));
         log.warn("POST 请求参数校验异常：{}",messages);
         return HttpResponse.fail(ResponseCode.REQUEST_PARAMETER_INVALID.getCode(),messages.toString());
-    }
-
-    @ExceptionHandler(Exception.class)
-    Map<String,Object> systemErrorHandler(Exception e){
-        log.error("未知异常，请联系管理员");
-        return HttpResponse.fail(ResponseCode.SYSTEM_ERROR.getCode(),ResponseCode.SYSTEM_ERROR.getMsg());
     }
 }
