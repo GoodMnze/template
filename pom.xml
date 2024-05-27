@@ -11,14 +11,11 @@
     <modules>
         <module>my_spring</module>
         <module>rest_template</module>
-        <module>rest_template</module>
     </modules>
 
     <groupId>com.mnze</groupId>
-    <artifactId>learn</artifactId>
+    <artifactId>template</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>learn</name>
-    <description>learn</description>
     <packaging>pom</packaging>
 
     <properties>
