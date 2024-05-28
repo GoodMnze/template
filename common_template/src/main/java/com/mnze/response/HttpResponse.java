@@ -19,7 +19,7 @@ public class HttpResponse {
     }
 
     public static Map<String, Object> success(Object data) {
-        Map<String, Object> map = new HashMap<String, Object>(3);
+        Map<String, Object> map = new HashMap<>(3);
         map.put("code", SUCCESS_CODE);
         map.put("message", SUCCESS_MSG);
         map.put("data", data);
@@ -28,7 +28,7 @@ public class HttpResponse {
     }
 
     public static Map<String, Object> successWithMsg(Integer code ,String msg, Object data) {
-        Map<String, Object> map = new HashMap<String, Object>(3);
+        Map<String, Object> map = new HashMap<>(3);
         map.put("code", code);
         map.put("message", msg);
         map.put("data", data);
@@ -36,7 +36,7 @@ public class HttpResponse {
     }
 
     public static Map<String, Object> successWithPage(int totalCount, Collection<?> items) {
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
         map.put("total", totalCount);
         map.put("items", items);
 
@@ -54,7 +54,7 @@ public class HttpResponse {
 
 
     public static Map<String, Object> fail(Integer code, String message) {
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
         map.put("code", code);
         map.put("message", message);
         map.put("data", null);
