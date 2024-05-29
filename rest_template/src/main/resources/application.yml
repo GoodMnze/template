@@ -5,10 +5,8 @@ server:
 spring:
   application:
     name: cloud-template
-  cloud:
-    nacos:
-      discovery:
-        server-addr: localhost:8848
+  profiles:
+    import: integration_template/nacos.yaml
 
 logging:
   level:
