@@ -5,9 +5,13 @@ server:
 spring:
   application:
     name: cloud-template
-  profiles:
-    import: integration_template/nacos.yaml
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+      config:
+        enabled: false
 
 logging:
   level:
-    com.alibaba.cloud.nacos: DEBUG
+    root: INFO
