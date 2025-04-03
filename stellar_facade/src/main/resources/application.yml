@@ -1,0 +1,11 @@
+# 配置tomcat端口号
+server:
+  port: 8090
+
+spring:
+  application:
+    name: template
+
+logging:
+  level:
+    root: INFO

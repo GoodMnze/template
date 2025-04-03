@@ -1,26 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.lingfeng</groupId>
+    <artifactId>stellar</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>stellar</name>
+    <description>my stellar </description>
+
+    <modules>
+        <module>stellar_facade</module>
+        <module>stellar_service</module>
+        <module>stellar_common</module>
+        <module>stellar_integration</module>
+    </modules>
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.13</version>
+        <version>3.4.2</version>
+        <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <modules>
-        <module>rest_template</module>
-        <module>service_template</module>
-        <module>common_template</module>
-        <module>integration_template</module>
-    </modules>
-
-    <groupId>com.mnze</groupId>
-    <artifactId>template</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <packaging>pom</packaging>
-
     <properties>
+        <java.version>17</java.version>
+        <maven.compiler.release>${java.version}</maven.compiler.release>
         <java.version>8</java.version>
         <spring.version>2.6.7</spring.version>
         <lombok.version>1.18.24</lombok.version>
@@ -30,27 +37,10 @@
         <dependencies>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>2.6.13</version>
-                <type>pom</type>
-                <scope>import</scope>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>3.4.2</version>
             </dependency>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>2021.0.5</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.alibaba.cloud</groupId>
-                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-                <version>2021.0.5.0</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
-            <!--    lombok        -->
+              <!--    lombok        -->
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
@@ -59,5 +49,4 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
 </project>
