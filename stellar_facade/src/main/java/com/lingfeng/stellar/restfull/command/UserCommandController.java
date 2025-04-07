@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
  * @author xiaolingfeng
  * @since 2023/4/12 12:52 PM
  */
-
 @RestController
 @RequestMapping("/api/user")
 public class UserCommandController {
