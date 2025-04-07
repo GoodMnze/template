@@ -1,0 +1,21 @@
+# 配置tomcat端口号
+server:
+  port: 8090
+
+spring:
+  application:
+    name: template
+
+logging:
+  level:
+    root: INFO
+
+  datasource:
+    url: jdbc:mysql://mysql.sqlpub.com:3306/testdb?useSSL=false&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: mnzemate
+    password: LDf4HRdLMLkahVok
+    jpa:
+      hibernate:
+        ddl-auto: update  # 根据实体自动更新数据库表结构
+      show-sql: true

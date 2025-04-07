@@ -9,6 +9,15 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>stellar_integtation</artifactId>
+    <artifactId>stellar-common</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+    </dependencies>
+
 </project>

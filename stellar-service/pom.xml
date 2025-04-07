@@ -9,15 +9,23 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>stellar_common</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <artifactId>stellar-service</artifactId>
 
     <dependencies>
         <dependency>
+            <groupId>com.lingfeng</groupId>
+            <artifactId>stellar-common</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.lingfeng</groupId>
+            <artifactId>stellar-repository</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
-
 </project>

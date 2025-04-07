@@ -12,10 +12,10 @@
     <description>my stellar </description>
 
     <modules>
-        <module>stellar_facade</module>
-        <module>stellar_service</module>
-        <module>stellar_common</module>
-        <module>stellar_integration</module>
+        <module>stellar-facade</module>
+        <module>stellar-service</module>
+        <module>stellar-common</module>
+        <module>stellar-repository</module>
     </modules>
 
     <parent>
