@@ -2,16 +2,15 @@
 server:
   port: 8090
 
-spring:
-  application:
-    name: template
-  datasource:
-    url: jdbc:mysql://mysql.sqlpub.com:3306/testdb?useSSL=false&serverTimezone=UTC
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: mnzemate
-    password: LDf4HRdLMLkahVok
-
 logging:
   level:
     root: INFO
 
+spring:
+  application:
+    name: template
+  datasource:
+    url: jdbc:mysql://mysql.sqlpub.com:3306/lighthouse?useSSL=false&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: mnzemate
+    password: LDf4HRdLMLkahVok
