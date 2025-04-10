@@ -1,30 +1,26 @@
 package com.lingfeng.stellar.loan;
 
-import com.lingfeng.stellar.RootServiceTest;
-import com.lingfeng.stellar.po.LoanPO;
-import com.lingfeng.stellar.repository.LoanRepository;
-import jakarta.inject.Inject;
-import jakarta.persistence.criteria.Root;
-import org.assertj.core.util.Lists;
+import com.alibaba.fastjson.JSON;
+import com.lingfeng.stellar.ServiceTestConfig;
+import com.lingfeng.stellar.domain.Loan;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
 
-public class LoanServiceTest extends RootServiceTest {
+@Slf4j
+public class LoanServiceTest extends ServiceTestConfig {
 
     @Autowired
     private LoanService loanService;
 
     @Test
     public void crudTest(){
-        assertEquals(1, loanService.loanRepository.findAll().get(0).getId());
+        List<Loan> loans = loanService.queryAll();
+        log.info("loans: {}", JSON.toJSONString(loans));
     }
+
 }

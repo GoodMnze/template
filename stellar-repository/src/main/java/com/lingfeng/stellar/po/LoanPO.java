@@ -9,6 +9,7 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -46,9 +47,9 @@ public class LoanPO {
     private BigDecimal installmentAmount;
 
     @Column(name = "create_time")
-    private Instant createTime;
+    private LocalDateTime createTime;
 
     @Column(name = "update_time")
-    private Instant updateTime;
+    private LocalDateTime updateTime;
 
 }
