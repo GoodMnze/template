@@ -6,8 +6,8 @@ import com.lingfeng.stellar.repository.LoanRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class LoanService {
@@ -19,8 +19,12 @@ public class LoanService {
         this.loanRepository = loanRepository;
     }
 
-    public List<Loan> queryAll(){
+    public List<Loan> getAllLoan(){
         List<LoanPO> loans = loanRepository.findAll();
-        return loans.stream().map(Loan::create).collect(Collectors.toList());
+        return loans.stream().map(Loan::create).toList();
+    }
+
+    public BigDecimal getTotalOutstandingAmount(List<Loan> loans){
+        return Loan.calculateTotalOutstandingBalance(loans);
     }
 }

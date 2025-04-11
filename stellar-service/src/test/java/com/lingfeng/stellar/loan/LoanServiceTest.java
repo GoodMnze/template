@@ -19,7 +19,7 @@ public class LoanServiceTest extends ServiceTestConfig {
 
     @Test
     public void crudTest(){
-        List<Loan> loans = loanService.queryAll();
+        List<Loan> loans = loanService.getAllLoan();
         log.info("loans: {}", JSON.toJSONString(loans));
     }
 
