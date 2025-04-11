@@ -3,6 +3,7 @@ package com.lingfeng.stellar.loan;
 import com.alibaba.fastjson.JSON;
 import com.lingfeng.stellar.ServiceTestConfig;
 import com.lingfeng.stellar.domain.Loan;
+import com.lingfeng.stellar.value.RepaymentNode;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ public class LoanServiceTest extends ServiceTestConfig {
     public void crudTest(){
         List<Loan> loans = loanService.getAllLoan();
         log.info("loans: {}", JSON.toJSONString(loans));
+        List<RepaymentNode> repaymentNodes = loanService.getRepaymentNodes(loans);
+        log.info("repaymentNodes: {}", JSON.toJSONString(repaymentNodes));
     }
 
 }

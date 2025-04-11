@@ -9,7 +9,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjuster;
-import java.time.temporal.TemporalAdjusters;
 
 @Slf4j
 @Value
@@ -53,12 +52,11 @@ public class RepaymentSchedule {
         }
     }
 
-    public BigDecimal calculateRemainingBalance() {
-        LocalDate now = LocalDate.now();
+    public BigDecimal calculateRemainingBalance(LocalDate date) {
         LocalDate finalRepaymentDate = getFinalRepaymentDate();
 
         // 计算下一个有效还款日
-        LocalDate nextRepayment = calculateNextRepaymentDate(now);
+        LocalDate nextRepayment = calculateNextRepaymentDate(date);
 
         // 如果已经超过最终还款日则无剩余
         if (nextRepayment.isAfter(finalRepaymentDate)) {
@@ -87,9 +85,17 @@ public class RepaymentSchedule {
         return adjustToValidDay(baseDate, repaymentDay);
     }
 
-    LocalDate getFinalRepaymentDate() {
+    public LocalDate getFinalRepaymentDate() {
         LocalDate finalDate = firstRepaymentDate.plusMonths(installmentCount - 1);
         return adjustToValidDay(finalDate, repaymentDay);
+    }
+
+    public BigDecimal getTotalRepayment(){
+        return installmentAmount.multiply(BigDecimal.valueOf(installmentCount));
+    }
+
+    public BigDecimal get(BigDecimal principal){
+        return getTotalRepayment().subtract(principal);
     }
 
     private LocalDate adjustToValidDay(LocalDate date, int targetDay) {
@@ -106,38 +112,3 @@ public class RepaymentSchedule {
     }
 }
 
-// 测试类
-class Main {
-    public static void main(String[] args) {
-        // 测试案例：月末适配逻辑
-        testEndOfMonthCase();
-
-        // 测试案例：正常情况
-        testRegularCase();
-    }
-
-    private static void testEndOfMonthCase() {
-        String str = "";
-        RepaymentSchedule schedule = RepaymentSchedule.builder()
-                .repaymentDay(7)
-                .installmentCount(12)
-                .firstRepaymentDate(LocalDate.of(2024, 9, 7)) // 非闰年2月
-                .installmentAmount(BigDecimal.valueOf(1102.97))
-                .build();
-
-        System.out.println("月末案例最终还款日: " + schedule.getFinalRepaymentDate());
-        System.out.println("剩余待还金额: " + schedule.calculateRemainingBalance());
-    }
-
-    private static void testRegularCase() {
-        RepaymentSchedule schedule = RepaymentSchedule.builder()
-                .repaymentDay(7)
-                .installmentCount(12)
-                .firstRepaymentDate(LocalDate.of(2023, 4, 7))
-                .installmentAmount(BigDecimal.valueOf(1000))
-                .build();
-
-        System.out.println("正常案例最终还款日: " + schedule.getFinalRepaymentDate());
-        System.out.println("剩余待还金额: " + schedule.calculateRemainingBalance());
-    }
-}

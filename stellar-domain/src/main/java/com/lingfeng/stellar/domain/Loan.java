@@ -1,6 +1,7 @@
 package com.lingfeng.stellar.domain;
 
 import com.lingfeng.stellar.po.LoanPO;
+import com.lingfeng.stellar.value.RepaymentNode;
 import com.lingfeng.stellar.value.RepaymentSchedule;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -48,7 +49,7 @@ public class Loan {
     @NonNull
     private final LocalDateTime updateTime;
 
-    public static Loan create(@NonNull LoanPO loanPO) {
+    public static Loan of(@NonNull LoanPO loanPO) {
         // 参数校验
         validateLoanPO(loanPO);
 
@@ -87,24 +88,55 @@ public class Loan {
         }
     }
 
+    public LocalDate getClearDate() {
+        return repaymentSchedule.getFinalRepaymentDate();
+    }
+
+
+    // 领域能力：判断是否在指定日期已结清
+    public boolean isClearedOn(LocalDate date) {
+        return date.isAfter(repaymentSchedule.getFinalRepaymentDate());
+    }
+
+    // 领域能力：获取贷款总还款额（本金+利息）
+    public BigDecimal getTotalRepayment() {
+        return repaymentSchedule.getInstallmentAmount()
+                .multiply(BigDecimal.valueOf(repaymentSchedule.getInstallmentCount()));
+    }
+
+    // 领域能力：计算已产生的总利息
+    public BigDecimal calculateTotalInterest() {
+        return getTotalRepayment().subtract(borrowAmount);
+    }
+
+    // 计算能力：每月剩余总待还
+    public static BigDecimal remainingMonthlyPayment(List<Loan> loans, LocalDate date){
+        return loans.stream().filter(loan -> !loan.isClearedOn(date))
+                .map(loan -> loan.getRepaymentSchedule().getInstallmentAmount())
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+
     private static LocalDate calculateFirstRepaymentDate(LocalDate borrowDate, int repaymentDay) {
         LocalDate baseDate = borrowDate.plusMonths(1);
         return baseDate.with(TemporalAdjusters.lastDayOfMonth())
                 .withDayOfMonth(Math.min(repaymentDay, baseDate.lengthOfMonth()));
     }
 
-    public static BigDecimal calculateTotalOutstandingBalance(List<Loan> loans) {
+    // 计算每月待还
+    public static BigDecimal calculateTotalOutstandingBalance(List<Loan> loans, LocalDate date) {
         if (CollectionUtils.isEmpty(loans)) {
             return BigDecimal.ZERO;
         }
         return loans.stream()
-                .map(loan -> loan.getRepaymentSchedule().calculateRemainingBalance())
+                .map(loan -> loan.getRepaymentSchedule().calculateRemainingBalance(date))
                 .filter(Objects::nonNull)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-    public static Map<Integer, BigDecimal> groupByMonth(List<Loan> loans) {
+    public static Map<Integer, BigDecimal> groupByMonth(List<Loan> loans, LocalDate date) {
         return loans.stream()
+                .filter(loan -> !loan.isClearedOn(date))
                 .collect(Collectors.groupingBy(
                         loan -> loan.getRepaymentSchedule().getRepaymentDay(),
                         TreeMap::new,  // 使用TreeMap确保按键排序
@@ -120,4 +152,10 @@ public class Loan {
                 .map(loan -> loan.getRepaymentSchedule().getInstallmentAmount())
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
+
+    public static List<RepaymentNode> getRepaymentNodes(List<Loan> loans){
+        return RepaymentNode.of(loans);
+    }
+
+
 }
