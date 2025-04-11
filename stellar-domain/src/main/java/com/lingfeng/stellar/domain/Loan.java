@@ -13,8 +13,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Getter
@@ -100,6 +100,24 @@ public class Loan {
         return loans.stream()
                 .map(loan -> loan.getRepaymentSchedule().calculateRemainingBalance())
                 .filter(Objects::nonNull)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    public static Map<Integer, BigDecimal> groupByMonth(List<Loan> loans) {
+        return loans.stream()
+                .collect(Collectors.groupingBy(
+                        loan -> loan.getRepaymentSchedule().getRepaymentDay(),
+                        TreeMap::new,  // 使用TreeMap确保按键排序
+                        Collectors.mapping(
+                                loan -> loan.getRepaymentSchedule().getInstallmentAmount(),
+                                Collectors.reducing(BigDecimal.ZERO, BigDecimal::add)
+                        )
+                ));
+    }
+
+    public static BigDecimal calculateTotalOutstanding(List<Loan> loans){
+        return loans.stream()
+                .map(loan -> loan.getRepaymentSchedule().getInstallmentAmount())
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }

@@ -7,13 +7,16 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class LoanSummaryVO {
-    private List<LoanVO> monthlyOutstanding;
+    private Map<Integer, BigDecimal> monthlyOutstanding;
+
+    private BigDecimal totalOutstanding;
 
     private BigDecimal outstandingBalance;
 

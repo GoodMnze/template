@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class LoanService {
@@ -26,5 +27,13 @@ public class LoanService {
 
     public BigDecimal getTotalOutstandingAmount(List<Loan> loans){
         return Loan.calculateTotalOutstandingBalance(loans);
+    }
+
+    public Map<Integer, BigDecimal> getMonthlyOutstanding(List<Loan> loans){
+        return Loan.groupByMonth(loans);
+    }
+
+    public BigDecimal getTotalOutstanding(List<Loan> loans){
+        return Loan.calculateTotalOutstanding(loans);
     }
 }
